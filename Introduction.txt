@@ -1,0 +1,42 @@
+-Building Distributed sytems is challenging, often they are made bespoke solutions, striking a resembolance to 
+    the world of solutions before microservices. 
+
+* History of Systems Development 
+    - In the beginning programs were built to do just one thing, and run on one purpose built machine. A machine could only run that programs
+    - As time went on, a machine could run multiple programs at once, using a time sharing operating systems
+    - Gradually machines became networked together with client server architecture, and so a small machine could harness the power of a bigger machine
+    - In early 2000s, due to the internet and large data centres, the concept of distributed computing came to light
+        -> Here, many small computers could be networked together to acheive bigger goals 
+    - Because of their nature, distributed systems are more reliable, and more scalable
+    - but they can be difficult to design and complicated to debug 
+
+* History of Patterns in Software Development 
+    - Formulisation of Algorithmic Programming 
+        -> "The Art of compouter programming"
+        -> A book on algorithsm not desinged for a specific machine, but abstracted and could be run on anybody's machine 
+        -> Provides readers with a shared toolkit for building programs 
+        -> Shows a general purpose concept that programmers should learn, and then variously apply in different scenarios 
+        -> 
+    - Patterns of Object orientated Programming
+        -> Procedual programming is insifficient to modern day programming 
+        -> Lead to rise of OO, which elevated data, reusibility, and extensibility to peers of the algorithsm 
+        -> In response to these changes in compouter programming, there were changes patterns and practices for programmers as well 
+        -> Patterns implemented coorectly gave way to reusable robust generic libraries 
+
+* The value of Patterns, Practices, and Components 
+    - By implemetning patters, youre standing on the shoulders of giants 
+        -> rare that our own use cases are truly unique 
+        -> ulimately the combination of tech and business models will result in something the worls hasn't seen before
+            but the way the system is built, and the problems it encounters as it aspires to be reliable, agile, and scalable
+            are not new 
+        -> By standing on the shoulders of giants, you don't make the same mistakes as those who came before you 
+    - Patterns give you and the people you work with a shared vocabulary, and the ability to understand your code easily 
+        -> e.g imagine i call an object foo, and you call it bar, and then we spend ages arguing about what they are, until
+            we realise we're both talking about the same thing? Now imagine we both just called it a LinkedList, would save 
+            time 
+        -> e.g A "side car" container is well understood and we don't have to waste time arguing over what this container does
+    - Shared Patterns give easy code reuse 
+        -> They give the abiliity to spot common components that can be implemented once 
+        -> Patterns are the basis for the definintion of the development of reusable components 
+        
+    

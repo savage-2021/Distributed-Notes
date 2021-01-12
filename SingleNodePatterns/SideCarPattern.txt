@@ -1,0 +1,62 @@
+- The Sidecar pattern is a single node pattern made up of two containers
+- One container augments a preexisting container to add functionality 
+- The first container is the application conatiner 
+    -> Contains the acual core logic 
+- The second conatiner is the sidecar container
+    -> Its role is to augment and improve the application containeer 
+    -> Often done without the application container's knowledge 
+    -> Adds functionality to the application caontiner, that might be otherwise hard to imporve 
+- Sidecar containers are coscheduled on the same machine by an atmoic container group
+    -> this could be a pod in kuberentes for example 
+- the two conatiners share a number of resources, such as a shared file system, hostname, and network 
+- Example: Adding HTTPS to a legacy service 
+    -> Initial container when built, didn't have https as a priority, but now it needs it 
+    -> its a legacy application, conatinersing it is easy enough, the binary can run on an old linux disto env 
+    -> Integrating a https service into an old code base is triccky
+    -> With the sidecar pattern, we can just run a nginx pod on the same node
+        -> Since they shre the same network, so can access the other container easily, and the sidecar pod can enable https
+- Dynamic configuration with sidecars: Configuration Synchronisation
+    -> lets say you have a configuration file for parameterising an application 
+    -> Preexisting applications tend to assume that a file is in the filesystem ready to setup the programs
+    -> But this is not necessarily the case in a cloud native environment 
+    -> It is often quite useful to use an API to update configuration, this allows you to do dynamic push of config information
+        via the api instead of manually logging into a server and updating the config 
+    -> By having an API you can automate things liek rollback, making things safer and easier 
+    -> Adapting and updating a prexisting solution can be hard, but by using the sidecar pattern 
+        -> For insance, the appliation container starts up using the config file in the filesystem
+        -> The sidecar conatiner constantly watches for a new config from the config API 
+        -> If there ever is a change, the sidecar config container, can signal to the application conatiner that it should reconfigure itself
+        -> This could be done as easily as telling the application coantiner to shutdown, and then the continer orcestration tool will bring it back up
+            except this time, the applciation conatiner wil now read the newer config file, placed in the system by the side car
+- So far, the reasons for having a sidecar continer have been for adaptions, but there are more usecases for it than that 
+- Another reason is for Modular Applications 
+    -> In any real world application, there is a need for debugging and logging and giving a readout of all the different processes similar to the top command line tool 
+    -> A way of doing this, would be to atatch a sidecar conainer to the container you want logs from 
+    -> Since they share the same PID (process id namespace), the sidecar conainer can inspect all running containers
+- Platform as Service (PaaS)
+    -> can be used to implement the complete logic of a server in a resuable manner 
+        -> main container = node.js webserver
+        -> sidecar conatiner = updates latest code from a git repository 
+    -> The 2 containers are deployed together to implement our simple PaaS 
+    -> Once deployed, every time new code is pushed to a git repo, our webserver is updated 
+- Designing Containers for Modularity and Reusability 
+    -> To be successful, a sidecar should be reusable across a wide range of applications and deployments 
+    -> For this to work, you need to focus on there different areas 
+        1) Parametising your conatiners
+            - Its the most important thing
+            - Each parametre can customise a generic container into a specific one 
+            - Consider the SSL sidecar, this would need two parametres
+                1) The name of the cert being used to provide SSL 
+                2) The port of the legacy application running on localhost
+        2) Creating the API surface of your container 
+            - Since you are passing parateres, you should think of specifying these containers as running a function 
+            - ALl ways tahts your container interacts with the world are now part of the API defined by the reusable continer
+            - The API will exist to make sure all consumers of the sidecar will conitnue to exist working correctly when subsequent versions are relased
+            - Conside the configuration management example from before:
+                1) Imagine we want to update the UPDATE_FREQUENCY, which indicates how often the config should be synchronised 
+                2) If this paratere changed to UPDATE_PERIOD, this would violate the sidecar's api and break for some users 
+        3) Documenting the Operations of your conatiners
+            - The most obvious way to do this is via the Dockerfile from which the conatiner was built 
+            - Use the ENV keyword in a dockerfile to set default env values 
+            - Use the LABEL keyword to add metadata 
+

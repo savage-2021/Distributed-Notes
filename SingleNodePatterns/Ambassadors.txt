@@ -1,0 +1,37 @@
+- An Ambassador conatiner brokers interactions between a conatiner pattern, and the rest of the world 
+- The two conatiners are tightly linked to provide symbiotic pairing that is scheduled from a one node machine 
+- There are two pros to the Ambassador pattern
+    1) The inhernet value of building modular reusable conatiners on a single node machine 
+    2) The separation of concerns makes the conatiner easier to rebuild and reuse, likewise with the ambassador can be 
+        resued with a number of other containers 
+
+- Using an Ambassador for a shared service 
+    -> Sometimes the data you want to store in a storage layer becomes too big for a machine to handle 
+    -> In such situations, you need to shard your storage layer 
+    -> Sharding splits up the layer into multiple disjoin pieces, each hosted by a separate machine 
+    -> Ambassador Example: Single Node Patter for adapting an existing service to talk to a sharded service 
+        -> When deploying a shared service one question comes into mind, and thats how to integrate data with an existing 
+            frontend of middleware code that stores data 
+        -> There needs to be logic that routes particualr request to a particular shard, but it is often difficult to retrofit 
+            such a sharded client into existing source code that expects to connect to a single storage backend. 
+        -> Addionaltionally, sharding services make it difficult to share configuration between different environments and 
+            produciton encironments 
+    -> One approach is to build all of the sharding logic into the sharding service itself 
+        -> would have to have a stateless load balancer for This
+        -> effectively, the loadbalancer is a distributed ambassador as a service 
+            -> However, this is slightly complicated and unecesary 
+        -> The alternative is to integrate a single node ambassador on the client side to route traffic to the appropriate shard 
+    -> Single Node Ambassador Pattern for client Sharding 
+        -> When adapting an existing application to a sharded backend, the ambassador logic will contain all the logic necessary to route 
+            traffic to the appropriate storage shard.
+        -> Thus, your frontend or middleware application only connects to your ambassador sidecar which appears like a single store running 
+            on localhost, however, it actually is running as a sharded ambassador proxy 
+        -> The net result is a separation of concerns 
+
+- Using an Ambassador for a Broker service 
+    -> When trying to render an application portable across multiple environments, one of the biggest issues is service discrovery and configurration 
+        -> The system that provides the linking is called the service broker 
+        -> e.g: Imagine a frontned relying on a mysql backend, in the public cloud this MySQL service might be provided as a SaaS, however, in a private cloud
+                a new virtual machine might have to be spun up for it 
+        -> It is the responsibility of the service broker to ambassador to introspect its environment and broker the appropriate connection 
+    

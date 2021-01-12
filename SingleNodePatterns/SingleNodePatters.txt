@@ -1,0 +1,10 @@
+Motivations 
+    - Goals behind containerisation 
+        -> Establishes boundaries around specific resources 
+        -> The boundary describes team ownership 
+        -> The boundary gives separation of concerns 
+        -> Theese are the reasons for splitting an application on a single machine into a group of containers 
+    - Splitting onto separate machines pros 
+        -> Scaling 
+        -> Separation of concenrs 
+        -> easy to update, understand, and redeploy 

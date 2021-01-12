@@ -1,0 +1,35 @@
+- Adapter pattern is used to modify the existing interface of an application so that it conforms to some 
+    predefined interface 
+    -> e.g might confrom an application to write all logs to stdout 
+- To efficientlh monitor your applications, you need commoon interfaces.
+    -> If each application provides a different metrics using a different interface, it is very difficult to collect
+        all those metrics in a single place for visualising and alerting 
+- Application container <-> Adapter Container <-> External Interface <-> Outside world 
+
+Monitoring:
+    - When monitoring your software, you want a single solution that can automatically discover any application that is 
+        deployed in your environment 
+
+Prometheus: 
+    - Its a monitoring aggregator which collects metrics and aggregates them into a timeseries database.
+    - Also provides visulisations and a query language 
+    - It expects every container to expose a specific api 
+    - Redis Example
+        -> Doesn't expose an api that prometheus needs
+        -> A redis (key value) container needs a adapter container and adapting it to the prometheus api 
+
+Logging:
+    - 
+
+fluentD:
+    - One common task is to normalise and standardise logs for an output
+        -> Since logs come in all diffferent shapes and forms
+    - fluentD is an open source project that does this 
+
+Health Monitor:
+    - Consider monitoring the health of an off the shelf database 
+        -> We don't want to mess around with the thirdparty container and add our own healthcheck code 
+    - Container orchestration will give basic health checks, but what if we want a richer kind? 
+    - We cna use shell scripts to run a list of diagnostics against a container
+        -> We can do this by running an adapter container, that we can easily update, and if this shares tehe node
+            it can easily share the database's network 
