@@ -2,7 +2,3 @@
     -> Simpliest pattern 
     -> In this pattern, every server is identical, and they are each capable of supporting traffic
     -> This pattern consists of a scalable number of servers, which each have a load balancer infront of them 
-
-
-
-    
