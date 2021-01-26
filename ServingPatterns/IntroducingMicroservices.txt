@@ -1,0 +1,13 @@
+- Microservices 
+    -> Buzzword for describing multinode distributed software architecture 
+    -> Made our of many different processes communicating over defined APIs 
+    -> They are the opposite of monolithic systems 
+    -> The introduction of APIs allows further decoupling of systems, as APIs just mean the top level needs to stay the same 
+        -> This allows for more fluid releases, since the microservice being deployed knows what needs to be kept stable
+            and others consuming the service don't need to worry about changes 
+    -> By applications not having to maintain state, it allows them to scale horizontally 
+
+    * Disadvantages 
+        -> Harder to debug when things go wrong 
+        -> Difficult to design and understand, (due to many forms of communication and multiple forms of coordination)
+        
