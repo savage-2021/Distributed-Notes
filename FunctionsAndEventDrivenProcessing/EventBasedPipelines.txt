@@ -1,0 +1,29 @@
+Event-Based Pipelines 
+    - Event pipelines often resemble old style flowcharts 
+    - Can be represented as a directed graph of connected even syncs 
+    - In the even pipeline pattern, each node is a different funciton or webhook, and the edges linking the grpah together are 
+        HTTP or other network calls to the function/webhook
+    - In general there is no shared state between the different pieces of the pipeline, but there may be a context or other reference 
+        point that can be used to look up information in shared storage 
+    
+    * Difference between this type of pipline and a microservices architecture? 
+        1) Event based pipelines are event driven, conversely microservice architecture features a colleciton of long running services 
+        2) Even driven pipelines may be highly asynchronous and diverse in the things that they connect together, for example, while 
+            it is difficult to see how a human approving a ticket in a ticketing system like jira could be intergrated intoa  microservices applicatino
+            its quite asy to see how that veent could be incorpreated into a even driven pipeline 
+    
+    Implementing a Pipeline for New-User Signup
+        -> When a user signs up to something, serveral things happen
+            sned a welcome email, email a new list of products, set up 2FA 
+        -> One approach to implementing this logic would be to place everyhing into a sngle monolithic usercreate server 
+            However, this factoring means that a single team owns the entirety of th user creation service, and that the entire 
+                exxperience is deployed as a single service 
+            - Both of thse mean thta it is more difficualt to perform experiments or makes changes to the user experience 
+        -> Consider instead, impmlementing the user login experience as an event pipeline wiht a series of FaaS
+        -> I  this factoring, the user creation function is actually unaware of the detail of what happens on the user login 
+        -> These list of actions, could just be a list of webhooks, and we can use FaaS to implement each of these handlers 
+    
+        -> The microservices based approach is simple to write, but might lead to complexity if we actuall had to deploy and manage three diff MS 
+            -> This is where FaaS can shine, since it makes ti easy to host small code snippets 
+            -> Also, by visualising our user creatin flow as an event driven pipeline, it is alos straightforward to have a high level of understanding 
+            

@@ -1,0 +1,13 @@
+The Decorator Pattern: Requst or Response Transformation 
+    - FaaS is ideal for deploying simple functions that can take an input, transform it into an output, and then pass it
+        on to a different service 
+    - This general pattern can be used to augment HTTP requsts to or from a different service 
+    - Decorator services are usualy stateless, and they are often added the fast to existing code as services evolves 
+    - The lightness of FaaS means that you can exxperiment with a variety of different decorators before finally adopting one and 
+        pulling it more completely into the implementation of a service 
+    - Example:
+        -> Adding defaults to the input to an HTTP RESTFul API 
+        -> By adding a FaaS decorator pattern to intercept the request between a user and a server, and add necesary null fields in the 
+            json body for instance 
+        -> its easy enough to create a python handler to intercept and update the requst, and deplpoy this on kubernetes with kubeless 
+    

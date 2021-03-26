@@ -1,0 +1,21 @@
+What is Apache Kafka?
+    Gets very complicated when you have many source systems, and many target systems 
+    Apache Kafka gets in the middle, all data is published to it 
+        -> It decouples systems 
+    Its distributed (has fault tolerece)
+    High Performace 
+    Horizontal scalability 
+    * Use Cases
+        -> Messaging System 
+        -> Activity Tracking 
+        -> Gather metrics from many different locations 
+        -> Application logs gathering 
+        -> Decoupling of system dependencies 
+The Ecosystem
+    
+    - Overview
+        Source Systems -> Producers -> Kafka -> Consumers -> Target Systems 
+                                  * ^ZOO KEEPER^ *
+    - Kafka Exended API 
+        1) Source systems, kafka connect source , kafka clusters/kafka streams/Mirror makker , kafka connect sink, target systmes 
+    - Confluent maintain apache kafka 

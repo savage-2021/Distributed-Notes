@@ -1,0 +1,23 @@
+Handling Events 
+    - The diference between requst driven, and event driven is the notion of session 
+    - Requests are part of a larger series of interactions
+        -> Generally each user requst is part of a larger interaction with a complete web applition or API 
+    - Events tend to be single instance and asynchronious in nature 
+        -> eg: a user signing up for a new service, a machine being about to reboot and notifying an operator 
+    - Because events tend to be independent and stateless , and the rate of events are highl variable, they are ideal candidates 
+        for FaaS architectures 
+        -> Also, because events are often dynamically added to th service, the lightweight nature of deploying functions, is a good 
+            match for defining new event handlers 
+        -> Because each event is conceptually independent, the forced decoupling of a funcitons based system actually helps reduce the 
+            conceptual complexity by enabling a developer to focus on the steps required to handle just a single type of event 
+        -> A concrete exapmle of this, is building in 2FA 
+    - Implementing TFA 
+        -> How to handle the requst to generate a random code and register it with the login service 
+        -> How to send the text message 
+        -> Its possible to add this code to the main login web server, but this is complicated and monolithic, and forces the actually
+            of sending a text message, whch has latency, to be inline with code that renders the login web page 
+        -> This latency produes a substandard user xp 
+        -> A better way is to use FaaS async to generate the random number, register it with the login service, and send a text
+            -> A login server can simply fire an asynchronous webhook requst to a FaaS, and teh FaaS can handle the somewhat slow and async task of registering 
+            THE TWO FACTOR CODE ANd sending the text 
+            -> Can use kubeless to do this 

@@ -1,0 +1,36 @@
+- There is a class of applications that might only need to temporarily come into existence to handle a single request
+- This is function as a service 
+- Function as a service is sometimes referred to serverless computing 
+
+Determinging Whne FaaS makes sense 
+-> Its tempting to see event driven processing as a universal hammer, however
+-> Within a particular context its a powerful tool, however it doesn't fit all applications and would make somethings to complicated 
+*Benefits 
+    -> Primarily benefits the developer, it simplidies the distance from code to running service 
+    -> There is no artifacat to create or push beyond the source code itself 
+    -> Code is deployed and scaled automatically 
+        -> As more traffic is loaded onto the service, more instances of the function are created to handle that increase in traddic 
+        -> If a function or service fails, it is automaitcally restarted
+    -> Like containers, they are even more granular building blodck for designing distributed systems 
+        -> Functions are stateless and this any sustem you build on top of functions is inherttly more modular and decoupled than a 
+            single system built from a single binary
+*Challenges
+    -> Forces you to decouple each piece of your service 
+        -> Each funciton is entirely dependent 
+        -> Communication is over a network, and each funciton instance cannont have local memory, requiring all states to be stored in a 
+            storage service 
+        -> this forced decopupling can improve agility and speed with which you can develop services, but it can also significantly 
+            complicate the operations of the same service 
+
+- The Need for Background Processing
+    - Funciton as a service is an event driven model, and because of the serverless nature of these stateless funcitons, they're timebounded
+    - So they don't really suit tings like background tasks that are low priotiy, such as compressing logs etc 
+    - For these tasks, swithc to pay by consumptions instawd of per request 
+
+- The need to hold data in memory 
+    - Architectural challenge limitations make FaaS suited for some tupes of applciations 
+    - A limitation could be to have a significat amount of data loaded into memory in order to process user requests
+        -> Searching through logs require a great deal of data to be loaded into memory in order to service user requsts 
+        -> Even with a relatilvey fast storage layer, this is not ideal 
+    - Because FaaS may be dynamically spun up in response to user requst while the user is waiting, the need to load a lot of detail will 
+        significantly impact latency 

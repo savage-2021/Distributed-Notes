@@ -1,0 +1,6 @@
+4 source systems, 6 target systems = 24 integrations 
+Apache Kafka allows you to decouple your streams by sitting in the middle 
+Distributed, resilient architecture, fault tolerant 
+Can scale to 100s of brokers 
+Latency of less than 10ms 
+Kafka makes it really easy to move lots of data in realtime in your company

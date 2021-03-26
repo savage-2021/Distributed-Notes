@@ -1,0 +1,64 @@
+Topics, Partitions and offsets 
+    - Topic is a particular stream of data 
+        -> Similar to a table in a database 
+        -> Can have as many topics as you want (like tables...)
+        -> They're identified by their names (like tables...)
+    - Topics are split in partitions 
+        -> Each partition is ordered 
+        -> EAch message within a partition gets an incremental id, called an offset 
+        -> Whe creating a topic, you need to say how many partitions it gets 
+        -> The number of messages in a parition are independent to each other 
+    
+    Example 
+        -> Say you have a fleet of trucks reporting their positions to Kafka 
+        -> You can have a topic that contains all the trucks positions 
+        -> Each truck will send a messaage every 20 seconds, and they will all contain the same data 
+        -> Create 10 partitions for that topic (arbitray, u just have to say one at runtime)
+        -> Partition and offset (x, y) don't mean the same message between partitions 
+        -> Order is only guarenteed within a partition (not across partitions)
+        -> Once data is written to a partition, it cna't be changed (its immutable)
+
+Brokers and Topics
+    - Brokers 
+        -> A kafka cluster is composed of multiple brokers (servers)
+        -> Each broker has an ID integer as identification 
+        -> Each broker continer certains topic partitions (but not all of them)
+        -> A good number to get started is 3 brokers, but some compnaies have 100s 
+        -> If you connect to any broker, you will be connected to the entire cluster
+    - Kafka will automatically distribute your topics across brokers 
+        -> Can have multiple different topics on the same broker
+
+Topic Replication Factor
+    - With distribution, you need Replication
+    - When you create a topic, you need to choose the replication factor (choose at least 3)
+        -> That way, if a broker goes down, another broker can serve the data 
+    - There is a leader for each replication 
+
+Producers 
+    - Producers write data to topics 
+    - Producers automatically know to which broker and partition to write to 
+    - Incase of broker failures, producers will automatically recover
+    - They can choose to receive data write acknowedgments (3 modes)
+        -> They can turn this off (possible data loss)
+        -> They can wait for leader acknowledgement (limited data loss)
+        -> They can wait for Leader + replicas acknowedgments (no data loss)
+    - Message Keys
+        -> Produces can choose to send a key with the message 
+        -> If key = null, data is sent round robin 
+        -> A key is basically sent if you need message ordering for a specific field 
+            -> You do this not to choose the partition a message goes to, but to make sure the
+                same key goes to the same partition each time
+
+Consumers
+    - Consumers read data from a topic (identified by name)
+    - Consumers know which broker to read from 
+    - IN case of broker failures, consumers know how to recover 
+    - Data is read in order WITHIN EACH Partition
+    - Consumer Groups 
+        - Consumers read data in consumer groups 
+        - Each consumer within a group reads from excluside paritions 
+        - If o have more consumers than paprtitions, some consumers will be incactive 
+        - Consumers know how to coordinate and go to each partition automatically 
+        - Consumers will become inactive if you have more consumesr than partitions
+
+Consumer Offsets 
